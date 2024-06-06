@@ -1,6 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <hello-world/>
 </template>
 
 <script>
@@ -17,10 +16,13 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 0;
+  padding: 0;
+    /* box-sizing: border-box; */
+  background-image: url('@/assets/meow.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  
 }
 </style>

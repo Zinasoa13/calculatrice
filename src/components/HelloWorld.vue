@@ -1,58 +1,137 @@
-<template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+<template>  
+<div class="container">
+  <h1 ref="typewriter">{{ text }}</h1>
+</div>
+<div class="calculator">
+  <div class="display">{{ display }}</div>
+  <div class="buttons">
+    <button v-for="button in buttons" :key="button" @click="afficher(button)">{{ button }}</button>
+    <button @click="Clear">C</button>
+    <button @click="Delete">DEL</button>
+    <button @click="Review">STORIES</button>
   </div>
+</div>
+  
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data() {
+    return{
+      text: 'CALCULATOOOR MITAAPPYYY',
+      display: '',
+      buttons : ['0','1','2','+','3','4','5','-','6','8','9','/','*','(',')','%','='],
+      history : [],
+      currentIndex: 0,
+      isDeleting: false
+    }
+  },
+  methods: {
+    afficher(button){
+      if (button === '='){
+        let result = eval(this.display)
+        this.history.push(`${this.display} = ${result}`)
+        this.display = result.toString();
+      }else {
+        this.display+=button
+      }
+    },
+    Clear() {
+      this.display = ''
+    },
+    Delete() {
+      this.display = this.display.slice(0,-1)
+    },
+    Review() {
+      this.display = this.history.join('\n')
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style lang="scss" scoped>
+  body{
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  h1 {
+    text-align:center;
+  }
+  .calculator {
+    width: 350px;
+    position: relative;
+    height: auto;
+    top: -15px;
+    margin-left: 34.2%;
+    background-color: transparent;
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    box-shadow: 0 0 5px black, 0 0 15px blue, 0 0 15px aquamarine;
+    padding: 20px;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: space-between;
+  }
+  .display {
+    background-color: rgba(128, 128, 128, 0.493);
+    color: rgb(252, 250, 250);
+    font-size: 2em;
+    text-align: right;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 3fr);
+    gap: 10px;
+    align-items: baseline;
+    align-content: stretch;
+    justify-items: stretch;
+    justify-content: space-evenly;
+    
+    button{
+      padding: 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(0 0 5px blue, 0 1px 15px violet, 0 0 20px aquamarine);
+
+      &:hover{
+        background-color: rgba(128, 128, 128, 0.281);
+      }
+
+      &:active{
+        background-color: #ccc;
+      }
+
+      &:nth-child(17){
+        background-color: aqua;
+        color: black;
+      }
+
+      &:nth-child(18){
+        background-color: aqua;
+        color: black;
+      }
+      &:nth-child(19){
+        background-color: rgba(238, 9, 226, 0.493);
+        color: black;
+      }
+      &:nth-child(20){
+        background-color: aqua;
+        color: black;
+      }
+
+    }
+  }
+
+
 </style>
